@@ -70,6 +70,7 @@ struct fusehfs_options options = {
     .encoding =		NULL,
     .readonly =		0,
     .partition = 0,
+    .appledouble = 0,
 };
 
 enum {
@@ -78,6 +79,7 @@ enum {
 	KEY_ENCODING,
 	KEY_READONLY,
 	KEY_PARTITION,
+	KEY_APPLEDOUBLE,
 };
 
 static struct fuse_opt FuseHFS_opts[] = {
@@ -88,6 +90,7 @@ static struct fuse_opt FuseHFS_opts[] = {
 	FUSE_OPT_KEY("--encoding=",	KEY_ENCODING),
 	FUSE_OPT_KEY("--readonly",	KEY_READONLY),
 	FUSE_OPT_KEY("--partition=",	KEY_PARTITION),
+	FUSE_OPT_KEY("--appledouble",	KEY_APPLEDOUBLE),
 	FUSE_OPT_END
 };
 
@@ -129,6 +132,9 @@ static int FuseHFS_opt_proc(void *data, const char *arg, int key, struct fuse_ar
 			return 0;
 		case KEY_PARTITION:
 			options.partition = strtoul(arg+12, 0, 0);
+			return 0;
+	        case KEY_APPLEDOUBLE:
+			options.appledouble = 1;
 			return 0;
 	}
 	return 0;
